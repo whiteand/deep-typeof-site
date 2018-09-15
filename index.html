@@ -23,19 +23,18 @@
 <body>
     <div id="app">
         <h4>Enter values... (ex. {a:1} | {a:2} | ...)</h4>
-        <textarea name="inputValues" id="inputValues" cols="30" rows="10" v-model="inputText">
-
-        </textarea>
+        <textarea v-model="inputText"></textarea>
+        <h4>Types dictionary (ex. `{ AItem: { a: 'Number' }}`)</h4>
+        <textarea v-model="inputTypesAliases"></textarea>
         <h5>New Type Name</h5>
         <input type="text" v-model="newTypeName">
         <hr>
         <h3>Type of values: </h3>
-        <div v-html="outputJSON">
-        </div>
+        <div v-html="outputJSON"></div>
         <h3>JSDOC: </h3>
         <pre v-html="outputJSDoc"></pre>
         <h3>Values: </h3>
-        <div v-for="val in values" v-html="render(val)" />
+        <div v-for="val in values" v-html="render(val)"></div>
     </div>
     <script src="bundle.js"></script>
 </body>

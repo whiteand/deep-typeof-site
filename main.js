@@ -1,20 +1,21 @@
 const Vue = require("./node_modules/vue/dist/vue");
 const types = require("deep-typeof");
 const renderjson = require("renderjson");
+
 const typedef = typeName => t => {
   return `@typedef {${types.toJSDocType(t)}} ${typeName}`;
 };
-const ONE_OF = "ONE_OF";
 
 const defaultT = `{a: 1}`;
 const app = new Vue({
   el: "#app",
   data: {
     inputText: defaultT,
-    newTypeName: "newType"
+    newTypeName: "newType",
+    inputTypesAliases: '{}'
   },
   computed: {
-    values() {
+    values () {
       try {
         const valuesText = this.inputText.split("|");
         const values = valuesText.map(e => eval(`(${e})`));
@@ -24,22 +25,28 @@ const app = new Vue({
         return [];
       }
     },
-    calculatedType() {
-      return types.concatAll(this.values.map(val => types.getType(val)));
+    aliases () {
+      try {
+        const jsCodeOfAliasesDictionary = `(${this.inputTypesAliases})`
+        return eval(jsCodeOfAliasesDictionary)
+      } catch (err) {
+        console.error(err)
+        return {}
+      }
     },
-    outputJSON() {
+    calculatedType () {
+      return types.concatAll(this.values.map(val => types.getType(val, this.aliases)));
+    },
+    outputJSON () {
       return this.render(this.calculatedType);
     },
-    JSDoc() {
+    JSDoc () {
       return typedef(this.newTypeName)(this.calculatedType);
     },
-    outputJSDoc() {
+    outputJSDoc () {
       return this.JSDoc;
     },
-    output() {
-      return `${this.outputJSON}<hr>${this.outputJSDoc}`;
-    },
-    valuesOutput() {
+    valuesOutput () {
       return this.values.map(e => JSON.stringify(e)).join(",\n");
     }
   },
@@ -47,7 +54,6 @@ const app = new Vue({
     render(val) {
       const docElem = renderjson.set_icons("", "").set_show_to_level(100)(val);
       return docElem.outerHTML;
-    },
-    copyJSDOCToClipboard() {}
+    }
   }
 });
