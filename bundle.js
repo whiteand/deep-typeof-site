@@ -287,7 +287,7 @@ const app = new Vue({
         const values = valuesText.map(e => eval(`(${e})`));
         return values;
       } catch (err) {
-        console.error(err);
+        console.debug(err);
         return [];
       }
     },
@@ -296,7 +296,7 @@ const app = new Vue({
         const jsCodeOfAliasesDictionary = `(${this.inputTypesAliases})`
         return eval(jsCodeOfAliasesDictionary)
       } catch (err) {
-        console.error(err)
+        console.debug(err)
         return {}
       }
     },
@@ -307,7 +307,15 @@ const app = new Vue({
       return this.render(this.calculatedType);
     },
     JSDoc () {
-      return typedef(this.newTypeName)(this.calculatedType);
+      const valueDoc = typedef(this.newTypeName)(this.calculatedType);
+      try {
+        const aliasesDefinitions = Object.entries(this.aliases)
+          .map(([alias, t]) => typedef(alias)(t))
+          .join('\n')
+        return `${aliasesDefinitions}\n\n${valueDoc}`
+      } catch (err) {
+        return valueDoc
+      }
     },
     outputJSDoc () {
       return this.JSDoc;
