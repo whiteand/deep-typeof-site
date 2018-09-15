@@ -1,0 +1,44 @@
+{
+  "_from": "typessite",
+  "_id": "typessite@1.0.6",
+  "_inBundle": false,
+  "_integrity": "sha512-Ez3SueBTGCr85FXXlPI4DbUOSNwXMffgN9KqWRNXZCFT9KVgj1FUTwCTQBJN7lkLimx8JwrDN4UUWREnZX3SIg==",
+  "_location": "/typessite",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "typessite",
+    "name": "typessite",
+    "escapedName": "typessite",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/typessite/-/typessite-1.0.6.tgz",
+  "_shasum": "2963252729707baa5d149dff22f65821a46e4e48",
+  "_spec": "typessite",
+  "_where": "C:\\Users\\Andrew\\Desktop\\site",
+  "author": {
+    "name": "Andrew Beletskiy"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "deep-typeof": "^1.0.5",
+    "renderjson": "^1.4.0",
+    "vue": "^2.5.17"
+  },
+  "deprecated": false,
+  "description": "Site with type calculations",
+  "license": "ISC",
+  "main": "index.js",
+  "name": "typessite",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "1.0.6"
+}
