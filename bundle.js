@@ -634,35 +634,30 @@ const getType = function (value, typesAliases = {}) {
     switch (true) {
       case R.contains(type, ['Number', 'Boolean', 'String', 'Null', 'RegExp', 'Undefined']):
         return type
-        break;
       case value instanceof Date:
         return `Date`
-        break;
       case value instanceof Promise:
         return 'Promise'
-        break;
       case type === 'Function':
         return value.length ?
           `Function (${value.length})` :
           `Function (void)`
-        break;
       case type === 'Array':
         return value.length ?
           minimifyArrayType(R.pipe(
             arr => arr.map((e, i, arr) => _getType(e, R.append(value, path), R.append(i, pathNames))),
             R.uniqWith(equals))(value)) : []
-        break;
       case type === 'Object':
         const keys = Object.keys(value)
         return keys.reduce((res, key) => {
           return R.assoc(key, _getType(value[key], R.append(value, path), R.append(key, pathNames)), res)
         }, {})
-        break;
       default:
         return type
     }
   }
-  return simplifyFromDict(_getType(value, [], ['value']), typesAliases)
+  const res = _getType(value, [], ['value'])
+  return simplifyFromDict(res, typesAliases)
 }
 
 const simplifyFromDict = R.curry((t, dict) => {
@@ -681,7 +676,7 @@ const simplifyFromDict = R.curry((t, dict) => {
     if (typeof t !== 'object') return t
     const getReplaced = R.pipe(
       R.toPairs,
-      ([propName, innerT]) => [propName, _simplifyFromDict(innerT)],
+      R.map(([propName, innerT]) => [propName, _simplifyFromDict(innerT)]),
       R.fromPairs
     )
     return getReplaced(t)
