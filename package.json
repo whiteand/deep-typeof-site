@@ -28,7 +28,7 @@
   },
   "bundleDependencies": false,
   "dependencies": {
-    "deep-typeof": "^1.0.8",
+    "deep-typeof": "^1.0.9",
     "renderjson": "^1.4.0",
     "vue": "^2.5.17"
   },
