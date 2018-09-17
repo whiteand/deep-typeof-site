@@ -1,4 +1,4 @@
-(function(){function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s}return e})()({1:[function(require,module,exports){
+(function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 // shim for using process in browser
 var process = module.exports = {};
 
@@ -334,7 +334,7 @@ const app = new Vue({
 },{"./node_modules/vue/dist/vue":325,"deep-typeof":4,"renderjson":324}],4:[function(require,module,exports){
 const R = require('ramda')
 
-const ONE_OF='ONE_OF'
+const ONE_OF = 'ONE_OF'
 const E = 'Empty'
 const S = 1
 const A = 2
@@ -411,10 +411,10 @@ const equalsE = R.always(true)
 
 var equals = R.curry((t1, t2) => {
   if (isS(t1) && isS(t2)) return equalsS(t1, t2)
-  if (isA(t1) && isA(t2)) return equalsA(t1,t2)
-  if (isP(t1) && isP(t2)) return equalsP(t1,t2)
-  if (isO(t1) && isO(t2)) return equalsO(t1,t2)
-  if (isE(t1) && isE(t2)) return equalsE(t1,t2)
+  if (isA(t1) && isA(t2)) return equalsA(t1, t2)
+  if (isP(t1) && isP(t2)) return equalsP(t1, t2)
+  if (isO(t1) && isO(t2)) return equalsO(t1, t2)
+  if (isE(t1) && isE(t2)) return equalsE(t1, t2)
   return false
 })
 
@@ -423,13 +423,13 @@ var equals = R.curry((t1, t2) => {
 // getSortedArrayOfTypes :: [T] -> [T]
 const getSortedArrayOfTypes = R.pipe(
   R.clone,
-  R.sort((t1,t2)=>lte(t1,t2) ? -1 : 1)
+  R.sort((t1, t2) => lte(t1, t2) ? -1 : 1)
 )
 
 // lteSortedTypesArray [T] -> [T] -> Boolean
 const lteSortedTypesArray = R.curry((a1, a2) => {
   if (R.isEmpty(a1) && R.isEmpty(a2)) return true
-  
+
   for (let i = 0; i < a1.length; i++) {
     const first = a1[i]
     const second = a2[i]
@@ -450,7 +450,7 @@ const lteSortedTypesArray = R.curry((a1, a2) => {
 const lteE = R.always(true)
 
 // lteS :: S -> S -> Boolean
-const lteS  = R.curry((t1, t2) => t1 <= t2)
+const lteS = R.curry((t1, t2) => t1 <= t2)
 
 // lteA :: A -> A -> Boolean
 const lteA = R.curry((a1, a2) => {
@@ -492,17 +492,28 @@ const lteO = R.curry((obj1, obj2) => {
 // lte :: T -> T -> Boolean
 var lte = R.curry((t1, t2) => {
   switch (true) {
-    case equals(t1, t2): return true
-    case isE(t1) && isE(t2): return lteE(t1, t2)
-    case isS(t1) && isS(t2): return lteS(t1, t2)
-    case isA(t1) && isA(t2): return lteA(t1, t2)
-    case isO(t1) && isO(t2): return lteO(t1, t2)
-    case isP(t1) && isP(t2): return lteP(t1, t2)
-    case isE(t1): return true
-    case isS(t1): return [isA, isO, isP].some(f => f(t2))
-    case isA(t1): return [isO, isP].some(f => f(t2))
-    case isO(t1): return isP(t2)
-    case isP(t1): return false
+    case equals(t1, t2):
+      return true
+    case isE(t1) && isE(t2):
+      return lteE(t1, t2)
+    case isS(t1) && isS(t2):
+      return lteS(t1, t2)
+    case isA(t1) && isA(t2):
+      return lteA(t1, t2)
+    case isO(t1) && isO(t2):
+      return lteO(t1, t2)
+    case isP(t1) && isP(t2):
+      return lteP(t1, t2)
+    case isE(t1):
+      return true
+    case isS(t1):
+      return [isA, isO, isP].some(f => f(t2))
+    case isA(t1):
+      return [isO, isP].some(f => f(t2))
+    case isO(t1):
+      return isP(t2)
+    case isP(t1):
+      return false
   }
   return false
 })
@@ -523,7 +534,7 @@ const concatSameStructureO = R.curry((obj1, obj2) => {
   const mergeReducer = (resObj, key) => {
     const t1 = obj1[key]
     const t2 = obj2[key]
-    const newType = concat(t1,t2)
+    const newType = concat(t1, t2)
     return R.assoc(key, newType, resObj)
   }
   return keys.reduce(mergeReducer, {})
@@ -539,9 +550,8 @@ const hasSameStructureO = R.curry((obj1, obj2) => {
 
 // concatS :: S -> S -> T
 const concatO = R.curry((obj1, obj2) => {
-  return hasSameStructureO(obj1, obj2)
-    ? concatSameStructureO(obj1, obj2)
-    : [ONE_OF, obj1, obj2]
+  return hasSameStructureO(obj1, obj2) ?
+    concatSameStructureO(obj1, obj2) : [ONE_OF, obj1, obj2]
 })
 
 const minimifyArrayType = arr => {
@@ -550,11 +560,11 @@ const minimifyArrayType = arr => {
   const oTypes = R.filter(isO, arr)
   const pTypes = R.filter(isP, arr)
   const objTypesReducer = (resOTypes, obj) => {
-      const ind = resOTypes.findIndex(t => hasSameStructureO(t, obj))
-      if (ind < 0) return [...resOTypes, obj]
-      const objToBeMergedLens = R.lensIndex(ind)
-      return R.over(objToBeMergedLens, concatSameStructureO(obj), resOTypes)
-    }
+    const ind = resOTypes.findIndex(t => hasSameStructureO(t, obj))
+    if (ind < 0) return [...resOTypes, obj]
+    const objToBeMergedLens = R.lensIndex(ind)
+    return R.over(objToBeMergedLens, concatSameStructureO(obj), resOTypes)
+  }
 
   const concatenatedOTypes = oTypes.reduce(objTypesReducer, [])
   const resTypes = [...sTypes, ...aTypes, ...concatenatedOTypes, ...pTypes]
@@ -568,9 +578,12 @@ const concatDifferent = R.curry((t1, t2) => {
   const allTypes = R.uniqWith(equals, [...types1, ...types2])
   const resTypes = minimifyArrayType(allTypes)
   switch (resTypes.length) {
-    case 0: return empty()
-    case 1: return resTypes[0]
-    default: return [ONE_OF, ...resTypes]
+    case 0:
+      return empty()
+    case 1:
+      return resTypes[0]
+    default:
+      return [ONE_OF, ...resTypes]
   }
 })
 
@@ -580,13 +593,20 @@ const concatP = concatDifferent
 // concat :: T -> T -> T
 var concat = R.curry((t1, t2) => {
   switch (true) {
-   case isE(t1): return t2
-   case isE(t2): return t1
-   case equals(t1,t2): return t1
-   case isS(t1) && isS(t2): return concatS(t1,t2)
-   case isA(t1) && isA(t2): return concatA(t1,t2)
-   case isO(t1) && isO(t2): return concatO(t1,t2)
-   case isP(t1) && isP(t2): return concatP(t1,t2)
+    case isE(t1):
+      return t2
+    case isE(t2):
+      return t1
+    case equals(t1, t2):
+      return t1
+    case isS(t1) && isS(t2):
+      return concatS(t1, t2)
+    case isA(t1) && isA(t2):
+      return concatA(t1, t2)
+    case isO(t1) && isO(t2):
+      return concatO(t1, t2)
+    case isP(t1) && isP(t2):
+      return concatP(t1, t2)
   }
 
   return concatDifferent(t1, t2)
@@ -604,62 +624,79 @@ var concatAll = R.reduce((res, t) => concat(res, t), E)
 /**
  * @type GetType
  */
-const getType = function(value, typesAliases = {}) {
+const getType = function (value, typesAliases = {}) {
   const _getType = (value, path, pathNames) => {
     const type = R.type(value)
     if (R.contains(value, path)) {
-      const index =  path.findIndex(e => e === value)
+      const index = path.findIndex(e => e === value)
       return `${type}[${pathNames.slice(0, index+1).join(', ')}]`
     }
-    let res = E
     switch (true) {
       case R.contains(type, ['Number', 'Boolean', 'String', 'Null', 'RegExp', 'Undefined']):
-        res = type
+        return type
         break;
       case value instanceof Date:
-        res =  `Date`
+        return `Date`
         break;
       case value instanceof Promise:
-        res = 'Promise'
+        return 'Promise'
         break;
       case type === 'Function':
-        res = value.length
-        ? `Function (${value.length})`
-        : `Function (void)`
+        return value.length ?
+          `Function (${value.length})` :
+          `Function (void)`
         break;
       case type === 'Array':
-        res =  value.length 
-         ? minimifyArrayType(R.pipe(
+        return value.length ?
+          minimifyArrayType(R.pipe(
             arr => arr.map((e, i, arr) => _getType(e, R.append(value, path), R.append(i, pathNames))),
-            R.uniqWith(equals))(value))
-         : []
+            R.uniqWith(equals))(value)) : []
         break;
       case type === 'Object':
         const keys = Object.keys(value)
-        res = keys.reduce((res, key)=>{
+        return keys.reduce((res, key) => {
           return R.assoc(key, _getType(value[key], R.append(value, path), R.append(key, pathNames)), res)
         }, {})
         break;
       default:
-        res = type
+        return type
     }
-    const [alias] = R.toPairs(typesAliases).find(([currentAlias, type]) => equals(type, res)) || []
-    return alias  
-      ? alias
-      : res
-
   }
-  return _getType(value, [], ['value'])
+  return simplifyFromDict(_getType(value, [], ['value']), typesAliases)
 }
+
+const simplifyFromDict = R.curry((t, dict) => {
+  const pairs = R.toPairs(dict)
+  if (R.isEmpty(pairs)) return t
+  const _simplifyFromDict = (t) => {
+    const [alias] = pairs.find(([currentAlias, type]) => equals(type, t)) || []
+    if (alias) return alias
+    if (isS(t) || isE(t)) return t
+    if (isA(t)) {
+      return t.map(innerT => _simplifyFromDict(innerT))
+    }
+    if (isP(t)) {
+      return [ONE_OF, ...t.slice(1).map(innerT => _simplifyFromDict(innerT))]
+    }
+    if (typeof t !== 'object') return t
+    const getReplaced = R.pipe(
+      R.toPairs,
+      ([propName, innerT]) => [propName, _simplifyFromDict(innerT)],
+      R.fromPairs
+    )
+    return getReplaced(t)
+  }
+  return _simplifyFromDict(t)
+})
 
 const toJSDocTypeA = (t, level, TAB, NEW_LINE) => {
   if (R.isEmpty(t)) return '[]'
 
-    let arrItemType = t.map(t => toJSDocType(t, level, TAB, NEW_LINE)).join("|")
+  let arrItemType = t.map(t => toJSDocType(t, level, TAB, NEW_LINE)).join("|")
 
-    if (t.length > 1) arrItemType = `(${arrItemType})`
+  if (t.length > 1) arrItemType = `(${arrItemType})`
 
-    return `${arrItemType}[]`
+  return `${arrItemType}[]`
 }
 
 const toJSDocTypeP = (t, level, TAB, NEW_LINE) => {
@@ -674,10 +711,13 @@ const toJSDocTypeES = t => `${t}`
 const toJSDocTypeO = (t, level, TAB, NEW_LINE) => {
   const pairToJsDocObj = ([propName, type]) => ({
     propName,
-    jsdocType: toJSDocType(type, level + 1, TAB, NEW_LINE )
+    jsdocType: toJSDocType(type, level + 1, TAB, NEW_LINE)
   })
 
-  const jsDocObjToPropDesc = ({ propName, jsdocType }, i, a) => `${propName}: ${jsdocType}${i === a.length - 1 ? '' : ','}`
+  const jsDocObjToPropDesc = ({
+    propName,
+    jsdocType
+  }, i, a) => `${propName}: ${jsdocType}${i === a.length - 1 ? '' : ','}`
   const propDescToPropDescsWithTabs = propDesc => `${TAB.repeat(level + 1)}${propDesc}`
   const propDescWithTabsToMultiline = propDescsWithTabs => propDescsWithTabs.join(NEW_LINE)
   const addCurlyBraces = str => `{${NEW_LINE}${str}${NEW_LINE}${TAB.repeat(level)}}`
@@ -749,6 +789,7 @@ module.exports = {
   concat,
   concatAll,
   getType,
+  simplifyFromDict,
   toJSDocType
 }
 },{"ramda":89}],5:[function(require,module,exports){

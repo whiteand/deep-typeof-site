@@ -1,34 +1,34 @@
 {
-  "_from": "typessite",
-  "_id": "typessite@1.0.6",
+  "_from": "typessite@^1.0.7",
+  "_id": "typessite@1.0.7",
   "_inBundle": false,
-  "_integrity": "sha512-Ez3SueBTGCr85FXXlPI4DbUOSNwXMffgN9KqWRNXZCFT9KVgj1FUTwCTQBJN7lkLimx8JwrDN4UUWREnZX3SIg==",
+  "_integrity": "sha512-xs8mF3wbiCtn3gpLruDwvv6YSvtcu5LxUpD45aOOJcTsiaujcfcS1H7yUksfnqaS3tThh+nmhLS53uAMfVsv9w==",
   "_location": "/typessite",
   "_phantomChildren": {},
   "_requested": {
-    "type": "tag",
+    "type": "range",
     "registry": true,
-    "raw": "typessite",
+    "raw": "typessite@^1.0.7",
     "name": "typessite",
     "escapedName": "typessite",
-    "rawSpec": "",
+    "rawSpec": "^1.0.7",
     "saveSpec": null,
-    "fetchSpec": "latest"
+    "fetchSpec": "^1.0.7"
   },
   "_requiredBy": [
     "#USER",
     "/"
   ],
-  "_resolved": "https://registry.npmjs.org/typessite/-/typessite-1.0.6.tgz",
-  "_shasum": "2963252729707baa5d149dff22f65821a46e4e48",
-  "_spec": "typessite",
-  "_where": "C:\\Users\\Andrew\\Desktop\\site",
+  "_resolved": "https://registry.npmjs.org/typessite/-/typessite-1.0.7.tgz",
+  "_shasum": "ae7fb3963666fad02caee4f3b3463ce3f24e531e",
+  "_spec": "typessite@^1.0.7",
+  "_where": "C:\\Users\\andrew.beletskiy\\Desktop\\typesSite",
   "author": {
     "name": "Andrew Beletskiy"
   },
   "bundleDependencies": false,
   "dependencies": {
-    "deep-typeof": "^1.0.5",
+    "deep-typeof": "^1.0.8",
     "renderjson": "^1.4.0",
     "vue": "^2.5.17"
   },
@@ -40,5 +40,5 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "version": "1.0.7"
+  "version": "1.0.8"
 }
