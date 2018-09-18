@@ -681,7 +681,13 @@ const simplifyFromDict = R.curry((t, dict) => {
     )
     return getReplaced(t)
   }
-  return _simplifyFromDict(t)
+  // Sometimes we can simplify using same dictionary twice - if some of the aliases based on the previous aliases
+  let oldT = E
+  do {
+    oldT = R.clone(t)
+    t = _simplifyFromDict(t)
+  } while (!equals(oldT, t));
+  return t
 })
 
 const toJSDocTypeA = (t, level, TAB, NEW_LINE) => {
