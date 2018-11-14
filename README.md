@@ -1,4 +1,7 @@
 # deep-typeof-site
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/whiteand/deep-typeof-site.svg)](https://greenkeeper.io/)
+
 Site that used for calculating types of values and documenting them as JSDoc
 
 # Goal
