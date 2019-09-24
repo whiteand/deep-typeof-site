@@ -1,40 +1,36 @@
 <!DOCTYPE html>
-
-<head>
-    <title>Typeof site</title>
-    <link rel="stylesheet" href="stylesheets/print.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <link rel="stylesheet" href="stylesheets/stylesheet.css">
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Get Type</title>
     <style>
-        body {
-            padding: 10px;
-        }
-        h4 {
-            text-align: center;
-        }
-        textarea {
-            width: 80%;
-            margin: 0 auto;
-            display: block
-        }
+      #input {
+        font-family: monospace;
+        white-space: pre;
+        width: 100%;
+        height: 400px;
+      }
     </style>
-</head>
-
-<body>
-    <div id="app">
-        <h4>Enter values... (ex. {a:1} | {a:2} | ...)</h4>
-        <textarea v-model="inputText"></textarea>
-        <h4>Types dictionary (ex. `{ AItem: { a: 'Number' }}`)</h4>
-        <textarea v-model="inputTypesAliases"></textarea>
-        <h5>New Type Name</h5>
-        <input type="text" v-model="newTypeName">
-        <hr>
-        <h3>Type of values: </h3>
-        <div v-html="outputJSON"></div>
-        <h3>JSDOC: </h3>
-        <pre v-html="outputJSDoc"></pre>
-        <h3>Values: </h3>
-        <div v-for="val in values" v-html="render(val)"></div>
-    </div>
-    <script src="bundle.js"></script>
-</body>
+  </head>
+  <body>
+    <textarea id="input" height="123"></textarea>
+    <pre id="output"></pre>
+    <script src="./getTypeDefinition.js"></script>
+    <script>
+      const input = document.getElementById("input");
+      const output = document.getElementById("output");
+      input.addEventListener("input", e => {
+        const jsCode = e.target.value;
+        try {
+          const value = window.eval(`(${jsCode})`);
+          const typeDefinition = window.getTypeDefinition(value);
+          output.innerText = typeDefinition;
+        } catch (error) {
+          output.innerText = error.message;
+        }
+      });
+    </script>
+  </body>
+</html>
